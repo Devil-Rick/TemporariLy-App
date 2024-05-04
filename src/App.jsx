@@ -1,9 +1,22 @@
-import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import SignUp from "./pages/SignUp";
+import Offers from "./pages/Offers";
+import ForgetPassword from "./pages/ForgetPassword";
+import SignIn from "./pages/SignIn";
 
 export default function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/offers" element={<Offers />} />
+        <Route path="/forgot-password" element={<ForgetPassword />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
