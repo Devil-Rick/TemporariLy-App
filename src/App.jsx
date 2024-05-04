@@ -5,10 +5,12 @@ import SignUp from "./pages/SignUp";
 import Offers from "./pages/Offers";
 import ForgetPassword from "./pages/ForgetPassword";
 import SignIn from "./pages/SignIn";
+import Navbar from "./components/Navbar";
 
 export default function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
