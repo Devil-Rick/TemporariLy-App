@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+    background-color: rgba(255, 223, 253, 0.989);
+}
+
+@layer components {
+    .layout-container {
+        @apply flex flex-wrap justify-center items-center
+    }
+    .form-component {
+        @apply w-full mb-4 rounded-sm px-4 py-2 text-gray-800 text-xl border-gray-300 transition ease-in-out
+    }
+}
