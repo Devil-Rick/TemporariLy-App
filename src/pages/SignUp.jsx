@@ -1,7 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Login from "../assets/Images/login.jpg";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import FormComponent from "../components/Form";
+// firebase authentication imports
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {db} from '../firebase.config';
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { toast } from "react-toastify";
+
 
 export default function SignUp() {
 
@@ -14,6 +21,7 @@ export default function SignUp() {
   });
 
   const { fullName, email, password } = formData;
+  const navigate = useNavigate();
 
   const change = (e) => {
     setFormData((prevState) => ({
@@ -22,6 +30,29 @@ export default function SignUp() {
     }));
   };
 
+
+  // Adding user using firebase authentication
+  const addUser = async (e) => {
+    e.preventDefault()
+    try {
+      const auth = getAuth();
+
+      const userCreds = await createUserWithEmailAndPassword(auth, email, password)
+      const user = userCreds.user;
+      updateProfile(auth.currentUser, {
+        displayName: fullName
+      })
+      
+      const formDataCopy = {...formData, timestamp : serverTimestamp()}
+      delete formDataCopy.password
+
+      await setDoc(doc(db, 'users', user.uid), formDataCopy)
+      toast.success('Successfully added user')
+      navigate('/')
+    } catch (error) {
+      toast.error('Something Wrong with Registration')
+    }
+  }
 
   return (
     <section className="text-center">
@@ -33,7 +64,7 @@ export default function SignUp() {
         </div>
 
         <div className="md:w-[67%] lg:w-[40%] lg:ml-6">
-          <form>
+          <form onSubmit={addUser}>
 
             <input
               className="form-component"
@@ -79,7 +110,7 @@ export default function SignUp() {
               )}
             </div>
 
-            <FormComponent page={'Sign Up'} work={'Login'} pass={false}/>
+            <FormComponent page={'Sign Up'} work={'Login'} pass={false} />
 
           </form>
         </div>

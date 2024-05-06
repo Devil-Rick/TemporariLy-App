@@ -8,7 +8,7 @@ pnpm-debug.log*
 lerna-debug.log*
 
 firebase.rules.txt
-.env.local
+.env
 node_modules
 dist
 dist-ssr
