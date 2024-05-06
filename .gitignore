@@ -7,6 +7,8 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+firebase.rules.txt
+.env.local
 node_modules
 dist
 dist-ssr
