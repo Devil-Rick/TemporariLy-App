@@ -120,7 +120,14 @@ export default function SignUp() {
               )}
             </div>
 
-            <FormComponent page={'Sign Up'} work={'Login'} pass={false} />
+            <FormComponent
+              page={'Sign Up'}
+              link={'/sign-in'}
+              linkPara={'/forgot-password'}
+              text={"Have an Account."}
+              pass={'Forgot Password ?'}
+              work={'Sign In'}
+            />
 
           </form>
         </div>

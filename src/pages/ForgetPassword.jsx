@@ -4,7 +4,7 @@ import FormComponent from "../components/Form";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import {err} from '../assets/data/error'
+import { err } from '../assets/data/error'
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState('');
@@ -20,11 +20,11 @@ export default function ForgetPassword() {
     try {
       const auth = getAuth();
 
-      await sendPasswordResetEmail(auth , email);
+      await sendPasswordResetEmail(auth, email);
       navigate('/sign-in');
       toast.success('Reset Password has been successfully sent.');
 
-    } catch (error) { 
+    } catch (error) {
       toast.error(err[2]);
       console.log(error.message);
     }
@@ -53,7 +53,14 @@ export default function ForgetPassword() {
               required
             />
 
-            <FormComponent page={'Send reset email'} work={'Login'} pass={true} />
+            <FormComponent
+              page={'Send reset email'}
+              link={'/sign-up'}
+              work={'Register'}
+              text={"Don't have an account?"}
+              linkPara={'/sign-in'}
+              pass={'Sign In Instead'}
+            />
 
           </form>
         </div>

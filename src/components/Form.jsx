@@ -3,22 +3,22 @@ import OAuth from "./OAuth";
 
 
 // eslint-disable-next-line react/prop-types
-export default function FormComponent({page, work, pass}) {
+export default function FormComponent({page, linkPara, text, work , link, pass}) {
 
 
     return (
         <>
             <div className="justify-between layout-container mb-6">
-                <p>{work === 'Register' ? "Don't have an account?" : 'Have an account?'}
+                <p>{text}
                     <span className="text-red-600 font-semibold hover:text-red-800 transition duration-200 ease-in-out">
-                        <Link to={work === 'Register' ? '/sign-up' : '/sign-in' }>
+                        <Link to={link}>
                             &nbsp;{work}
                         </Link>
                     </span>
                 </p>
                 <p className="text-blue-700 font-semibold hover:text-blue-900 transition duration-200 ease-in-out">
-                    <Link to={pass ? '/sign-in' : '/forgot-password'}>
-                        {pass ? 'Sign In Instead' : 'Forgot Password ?'}</Link>
+                    <Link to={linkPara}>
+                        {pass}</Link>
                 </p>
             </div>
 

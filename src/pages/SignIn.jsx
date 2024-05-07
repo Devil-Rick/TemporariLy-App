@@ -39,9 +39,9 @@ export default function SignIn() {
         toast.success('Login successful')
       }
     } catch (error) {
-      if(error.message === 'Firebase: Error (auth/invalid-credential).'){
+      if (error.message === 'Firebase: Error (auth/invalid-credential).') {
         toast.error(err[3]);
-      }else{
+      } else {
         toast.error(err[2])
       }
       console.log(error.message);
@@ -94,7 +94,14 @@ export default function SignIn() {
               )}
             </div>
 
-            <FormComponent page={'Sign In'} work={'Register'} pass={false} />
+            <FormComponent
+              page={'Sign In'}
+              link={'/sign-up'}
+              linkPara = {'/forgot-password'}
+              text={"Don't have an account?"}
+              pass={'Forgot Password ?'}
+              work={'Register'}
+            />
 
           </form>
         </div>
