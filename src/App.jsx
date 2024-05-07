@@ -37,6 +37,5 @@ export default function App() {
         theme="dark"
         transition:Bounce />
     </>
-
   );
 }

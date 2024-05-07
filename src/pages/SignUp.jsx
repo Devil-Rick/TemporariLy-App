@@ -5,9 +5,10 @@ import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import FormComponent from "../components/Form";
 // firebase authentication imports
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import {db} from '../firebase.config';
+import { db } from '../firebase.config';
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { err } from "../assets/data/error";
 
 
 export default function SignUp() {
@@ -39,18 +40,29 @@ export default function SignUp() {
 
       const userCreds = await createUserWithEmailAndPassword(auth, email, password)
       const user = userCreds.user;
+      const docRef = doc(db, 'users', user.uid)
+
       updateProfile(auth.currentUser, {
         displayName: fullName
       })
-      
-      const formDataCopy = {...formData, timestamp : serverTimestamp()}
+
+      const formDataCopy = { ...formData, timestamp: serverTimestamp() }
       delete formDataCopy.password
 
-      await setDoc(doc(db, 'users', user.uid), formDataCopy)
+      await setDoc(docRef, formDataCopy)
       toast.success('Successfully added user')
+
       navigate('/')
     } catch (error) {
-      toast.error('Something Wrong with Registration')
+
+      if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+        toast.error(err[0])
+      } else if (error.message === 'Firebase: Password should be at least 6 characters (auth/weak-password).') {
+        toast.error(err[1])
+      } else {
+        toast.error(err[2])
+      }
+
     }
   }
 
