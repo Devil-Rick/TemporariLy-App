@@ -4,7 +4,7 @@ import Login from "../assets/Images/login.jpg";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import FormComponent from "../components/Form";
 // firebase authentication imports
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 import { db } from '../firebase.config';
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -48,10 +48,8 @@ export default function SignUp() {
 
       const formDataCopy = { ...formData, timestamp: serverTimestamp() }
       delete formDataCopy.password
-
       await setDoc(docRef, formDataCopy)
       toast.success('Successfully added user')
-
       navigate('/')
     } catch (error) {
 

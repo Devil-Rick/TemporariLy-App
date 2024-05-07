@@ -1,12 +1,34 @@
 import { useState } from "react";
 import Login from "../assets/Images/login.jpg";
 import FormComponent from "../components/Form";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import {err} from '../assets/data/error'
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState('');
 
+  const navigate = useNavigate();
   const change = (e) => {
     setEmail(e.target.value);
+  };
+
+  const resPass = async (e) => {
+    e.preventDefault();
+
+    try {
+      const auth = getAuth();
+
+      await sendPasswordResetEmail(auth , email);
+      navigate('/sign-in');
+      toast.success('Reset Password has been successfully sent.');
+
+    } catch (error) { 
+      toast.error(err[2]);
+      console.log(error.message);
+    }
+
   };
 
   return (
@@ -19,7 +41,7 @@ export default function ForgetPassword() {
         </div>
 
         <div className="md:w-[67%] lg:w-[40%] lg:ml-6">
-          <form>
+          <form onSubmit={resPass}>
 
             <input
               className="form-component"
