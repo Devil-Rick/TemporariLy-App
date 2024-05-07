@@ -2,6 +2,10 @@ import { useState } from "react";
 import Login from "../assets/Images/login.jpg";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import FormComponent from "../components/Form";
+import { toast } from "react-toastify";
+import { err } from "../assets/data/error";
+import { useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export default function SignIn() {
 
@@ -12,6 +16,8 @@ export default function SignIn() {
     password: "",
   });
 
+  const navigate = useNavigate();
+
   const { email, password } = formData;
 
   const change = (e) => {
@@ -20,6 +26,27 @@ export default function SignIn() {
       [e.target.id]: e.target.value,
     }));
   };
+
+  const login = async (e) => {
+    try {
+      e.preventDefault();
+
+      const auth = getAuth();
+      const userCred = await signInWithEmailAndPassword(auth, email, password);
+
+      if (userCred) {
+        navigate('/');
+        toast.success('Login successful')
+      }
+    } catch (error) {
+      if(error.message === 'Firebase: Error (auth/invalid-credential).'){
+        toast.error(err[3]);
+      }else{
+        toast.error(err[2])
+      }
+      console.log(error.message);
+    }
+  }
 
 
   return (
@@ -32,7 +59,7 @@ export default function SignIn() {
         </div>
 
         <div className="md:w-[67%] lg:w-[40%] lg:ml-6">
-          <form>
+          <form onSubmit={login}>
             <input
               className="form-component"
               type="email"
@@ -67,7 +94,7 @@ export default function SignIn() {
               )}
             </div>
 
-            <FormComponent page={'Sign In'} work={'Register'} pass = {false}/>
+            <FormComponent page={'Sign In'} work={'Register'} pass={false} />
 
           </form>
         </div>
