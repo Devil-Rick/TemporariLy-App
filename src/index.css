@@ -12,6 +12,6 @@ body {
         @apply flex flex-wrap justify-center items-center
     }
     .form-component {
-        @apply w-full mb-4 rounded-sm px-4 py-2 text-gray-800 text-xl border-gray-300 transition ease-in-out
+        @apply w-full mb-4 rounded-sm px-4 py-2 text-gray-800 text-xl border-gray-300 transition ease-in-out focus:bg-pink-800 focus:text-white
     }
 }
