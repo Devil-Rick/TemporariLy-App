@@ -1,8 +1,23 @@
 import { NavLink, useLocation } from "react-router-dom";
 import Logo from "../assets/Images/Logo.png";
+import { useEffect, useState } from "react";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function Navbar() {
   const location = useLocation();
+  const auth = getAuth();
+
+  const [pageState, setPageState] = useState('Sign In');
+
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if(user){
+        setPageState('Profile')
+      }else{
+        setPageState('Sign In');
+      }
+    })
+  }, [auth])
 
   const pathMatch = (route) => {
     if (location.pathname === route) {
@@ -35,10 +50,10 @@ export default function Navbar() {
             </li>
             <li
               className={`cursor-pointer text-sm font-semibold border-b-[3px]  ${
-                pathMatch("/sign-in") ? "text-black border-b-red-500" : "text-gray-400 border-b-transparent"
+                (pathMatch("/sign-in") || pathMatch('/profile')) ? "text-black border-b-red-500" : "text-gray-400 border-b-transparent"
               }`}
             >
-              <NavLink to={"/sign-in"}>Sign In</NavLink>
+              <NavLink to={"/profile"}>{pageState}</NavLink>
             </li>
           </ul>
         </div>
