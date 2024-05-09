@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase.config";
+import { FcHome } from "react-icons/fc";
 
 export default function Profile() {
   const auth = getAuth();
@@ -36,7 +37,7 @@ export default function Profile() {
         }))
 
         const docRef = doc(db, 'users', auth.currentUser.uid);
-        await updateDoc(docRef,{
+        await updateDoc(docRef, {
           fullName,
         })
 
@@ -60,7 +61,10 @@ export default function Profile() {
         <div className="layout-container px-6 py-12 max-w-6xl mx-auto">
 
           <div className="md:w-[67%] lg:w-[40%] lg:ml-6">
-            <form onSubmit={console.log('Submitted')}>
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              navigate('/create-listing')
+            }}>
               <input
                 className="form-component"
                 type="text"
@@ -103,10 +107,11 @@ export default function Profile() {
 
               </div>
 
-              <button className="bg-blue-500 w-full text-white py-2 mb-4 
+              <button className="flex items-center justify-center bg-blue-500 w-full text-white py-2 mb-4 
               font-medium rounded uppercase shadow-md hover:shadow-lg transition 
               duration-150 ease-in-out hover:bg-blue-700 active:bg-blue-900" type="Submit">
-                sell or rent your home
+                <span className="mr-2 p-1 text-2xl rounded-full bg-orange-300"><FcHome /></span>
+                <span>sell or rent your home</span>
               </button>
 
             </form>
