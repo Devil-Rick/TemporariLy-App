@@ -158,6 +158,7 @@ export default function Listing() {
       [...images].map((image) => storeImage(image))
     ).catch((error) => {
       setLoading(false);
+      console.log(error.message);
       toast.error("Images not uploaded");
       return;
     });
@@ -176,11 +177,11 @@ export default function Listing() {
     delete formDataCopy.latitude;
     delete formDataCopy.longitude;
     
-    await addDoc(collection(db, 'listings'), formDataCopy)
+    const docRef = await addDoc(collection(db, 'listings'), formDataCopy)
     setLoading(false);
 
     toast.success('Listing Created Successfully')
-    navigate('/')
+    navigate(`/category/${formDataCopy.property}/${docRef.id}`)
   }
 
   if (loading) {
@@ -433,8 +434,7 @@ export default function Listing() {
           <input
             type="file"
             id="images"
-            accept=".jpg, .jpeg, .png"
-            // value={images}
+            accept=".jpg,.png,.jpeg"
             className="mt-1 py-2 px-3 bg-slate-100 rounded text-l transition duration-150 ease-in-out"
             onChange={modify}
             multiple
