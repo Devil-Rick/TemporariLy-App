@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Spinner from "../components/spinner";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -19,6 +19,7 @@ export default function Listing() {
 
   const [geoLocation, setGeoLocation] = useState(true);
   const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     property: 'rent',
     name: '',
