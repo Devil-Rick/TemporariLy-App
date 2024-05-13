@@ -7,7 +7,7 @@ import { getAuth } from "firebase/auth";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "../firebase.config";
 import UpdateProfile from "../components/UpdateProfile";
-import ListingCard from "../components/ListingCard";
+import ListCard from "../components/ListCard";
 
 export default function Profile() {
   const auth = getAuth();
@@ -43,17 +43,18 @@ export default function Profile() {
       <section className="text-center">
         <h1 className="text-3xl mt-6 font-extrabold">My Profile</h1>
         <UpdateProfile />
-        {!loading && myListing.length > 0 &&
-          <>
-          <h2 className="text-2xl mt-6 font-extrabold">My Listings</h2>
-          <ul>
+      </section>
+
+      {!loading && myListing.length > 0 &&
+        <div className="max-w-7xl mt-4 px-3 mx-auto">
+          <h2 className="text-2xl text-center font-medium">My Listings</h2>
+          <ul className="sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 my-4">
             {myListing.map((item, index) => (
-              <ListingCard key={index} id={item.id} listing={item.data}/>
+              <ListCard key={index} id={item.id} listing={item.data} />
             ))}
           </ul>
-          </>
-        }
-      </section>
+        </div>
+      }
     </>
   )
 }

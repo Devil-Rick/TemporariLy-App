@@ -52,7 +52,7 @@ export default function UpdateProfile() {
 
 
     return (
-        <div className="layout-container px-6 py-12 max-w-6xl mx-auto">
+        <div className="layout-container px-6 pt-12 pb-4 max-w-6xl mx-auto">
 
             <div className="md:w-[67%] lg:w-[40%] lg:ml-6">
                 <form onSubmit={(e) => {
